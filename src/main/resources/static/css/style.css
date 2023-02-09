@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+#wrap {
+	width:1200px;
+	margin: auto;
+}
+
+.contents > .join {
+	width:400px;
+	border: 1px solid #dddddd;
+}
+
+.contents > .join > .join-box {
+	width:300px;
+}
