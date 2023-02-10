@@ -20,58 +20,63 @@
 			<div class="join d-flex justify-content-center mt-4">
 				<div class="join-box my-4">
 					<h1 class="text-center mb-5">Naromgram</h1>
-					<input type="text" class="form-control" placeholder="아이디" id="idInput">
-					<input type="password" placeholder="비밀번호" id="passwordInput" class="form-control mt-3">
-					<button type="button" id="loginBtn" class="btn btn-primary btn-block mt-3">로그인</button>
+					<div class="text-secondary text-center">변경할 비밀번호를<br>입력해 주세요.</div>
 					<br>
-					<div class="text-center">
-						<span id="loginFail" class="text-danger small" style="display:none">id 또는 비밀번호가 잘못 되었습니다.</span>
-					</div>
+					<span id="searchId" style="display:none">${userId}</span>
+					<input type="password" placeholder="변경할 비밀번호" id="passwordInput" class="form-control mt-3">
+					<input type="password" placeholder="변경할 비밀번호 확인" id="passwordConfirmInput" class="form-control mt-3">
 					<br>
-					<div class="text-center">
-						<h6>비밀번호를 까먹으셨나요?<a href="/user/passwordsearch/view">비밀번호 찾기</a></h6>
-						<h6>계정이 없으신가요?<a href="/user/signup/view">회원가입</a></h6>
-					</div>
+					<button type="button" id="changeBtn" class="btn btn-primary btn-block mt-3">비밀번호 변경</button>
+					<button type="button" id="cancelBtn" class="btn btn-danger btn-block mt-2">취소</button>
 				</div>
 			</div>
 		</section>
 	</div>
 	
 	<script src="/static/js/form.js"></script>
-	<script>	
+	<script>
 		$(document).ready(function() {
+			$("#cancelBtn").on("click", function() {
+				location.href="/user/passwordchange";
+			});
 			
-			$("#loginBtn").on("click", function() {
-				
-				let id = $("#idInput").val();
+			$("#changeBtn").on("click", function() {
+				let id = $("#searchId").text();
 				let password = $("#passwordInput").val();
+				let passwordConfirm = $("#passwordConfirmInput").val();
 				
-				
-				if(!valueCheck($("#idInput"), "아이디")){
+				if(!valueCheck($("#passwordInput"), "패스워드")){
+					return;
+				}
+				if(!valueCheck($("#passwordConfirmInput"), "패스워드확인")){
 					return;
 				}
 				
-				if(!valueCheck($("#passwordInput"), "비밀번호")){
+				if(password != passwordConfirm){
+					alert("비밀번호와 비밀번호확인이 일치하지 않습니다.");
+					passwordConfirm.val("");
+					passwordConfirm.focus();
 					return;
 				}
 				
 				$.ajax({
 					type: "post"
-					, url: "/user/signin"
-					, data: {"loginId":id, "password":password}
-					, success:function(data) {
+					, url: "/user/passwordchange"
+					, data: {"id":id, "password":password}
+					, success: function(data){
 						if(data.result == "success"){
-							location.href="/post/main/view";
+							alert("변경이 완료되었습니다.");
+							location.href="/user/passwordchange";
 						} else {
-							$("#loginFail").show();
+							alert("비밀번호 변경에 실패하였습니다.");
 						}
 					}
-					, error:function() {
-						alert("로그인 에러");
+					, error: function() {
+						alert("비밀번호 변경 에러");
 					}
 				});
 			});
 		});
-	</script>	
+	</script>
 </body>
 </html>
