@@ -47,16 +47,12 @@ public class UserRestController {
 	@GetMapping("/signup/duplication")
 	public Map<String, Boolean> signupDuplication(@RequestParam("loginId") String loginId) {
 		
-		User user = userBO.selectLoginId(loginId);
+		int count = userBO.selectLoginId(loginId);
 		
 		Map<String, Boolean> result = new HashMap<>();
 		
-		if(user != null) {
-			result.put("result", true);
-		} else {
-			result.put("result", false);
-		}
-		
+		result.put("result", count == 1);
+
 		return result;
 		
 	}

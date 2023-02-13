@@ -48,11 +48,9 @@
 		$(document).ready(function() {
 			
 			var check = false;
-			var doubleCheck = false;
 			
 			$("#idInput").on("change", function() {
 				check = false;
-				doubleCheck = false;
 				$("#idDuplication").hide();
 				$("#idNotDuplication").hide();
 			});
@@ -60,17 +58,16 @@
 			$("#idCheckBtn").on("click", function() {
 				let id = $("#idInput").val();
 				
+				if(!valueCheck($("#idInput"), "아이디")){
+					return;
+				}
+				
 				$.ajax({
 					type:"get"
 					, url:"/user/signup/duplication"
 					, data:{"loginId": id}
 					, success:function(data) {
-						if(id == ""){
-							$("#idDuplication").hide();
-							$("#idNotDuplication").hide();
-							alert("공백은 사용할 수 없습니다.");
-							check = false;
-						} else if(data.result) {
+						if(data.result) {
 							$("#idDuplication").show();
 							$("#idNotDuplication").hide();
 							check = false;
@@ -93,6 +90,7 @@
 				let passwordConfirm = $("#passwordConfirmInput").val();
 				let name = $("#nameInput").val();
 				let email = $("#emailInput").val();
+				let exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 				
 				if(!valueCheck($("#idInput"), "아이디")){
 					return;
@@ -107,6 +105,13 @@
 					return;
 				}
 				if(!valueCheck($("#emailInput"), "이메일")){
+					return;
+				}
+				
+				if(!exptext.test(email)){
+					alert("이메일 형식이 맞지 않습니다.");
+					email.val("");
+					email.focus();
 					return;
 				}
 				
@@ -138,7 +143,6 @@
 						alert("입력 오류");
 					}
 				});
-				
 			});
 		});
 	</script>

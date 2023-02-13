@@ -22,11 +22,10 @@
 					<h1 class="text-center mb-5">Naromgram</h1>
 					<div class="text-secondary text-center">변경할 비밀번호를<br>입력해 주세요.</div>
 					<br>
-					<span id="searchId" style="display:none">${userId}</span>
 					<input type="password" placeholder="변경할 비밀번호" id="passwordInput" class="form-control mt-3">
 					<input type="password" placeholder="변경할 비밀번호 확인" id="passwordConfirmInput" class="form-control mt-3">
 					<br>
-					<button type="button" id="changeBtn" class="btn btn-primary btn-block mt-3">비밀번호 변경</button>
+					<button type="button" id="changeBtn" class="btn btn-primary btn-block mt-3" data-id="${userId}">비밀번호 변경</button>
 					<button type="button" id="cancelBtn" class="btn btn-danger btn-block mt-2">취소</button>
 				</div>
 			</div>
@@ -41,7 +40,7 @@
 			});
 			
 			$("#changeBtn").on("click", function() {
-				let id = $("#searchId").text();
+				let id = $(this).data("id");
 				let password = $("#passwordInput").val();
 				let passwordConfirm = $("#passwordConfirmInput").val();
 				

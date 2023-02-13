@@ -20,9 +20,11 @@
 			<div class="join d-flex justify-content-center mt-4">
 				<div class="join-box my-4">
 					<h1 class="text-center mb-5">Naromgram</h1>
-					<input type="text" class="form-control" placeholder="아이디" id="idInput">
-					<input type="password" placeholder="비밀번호" id="passwordInput" class="form-control mt-3">
-					<button type="button" id="loginBtn" class="btn btn-primary btn-block mt-3">로그인</button>
+					<form id="loginForm">
+						<input type="text" class="form-control" placeholder="아이디" id="idInput">
+						<input type="password" placeholder="비밀번호" id="passwordInput" class="form-control mt-3">
+						<button type="submit" id="loginBtn" class="btn btn-primary btn-block mt-3">로그인</button>
+					</form>
 					<br>
 					<div class="text-center">
 						<span id="loginFail" class="text-danger small" style="display:none">id 또는 비밀번호가 잘못 되었습니다.</span>
@@ -41,11 +43,14 @@
 	<script>	
 		$(document).ready(function() {
 			
-			$("#loginBtn").on("click", function() {
+			$("#loginForm").on("submit",function() {
+			
+//			$("#loginBtn").on("click", function() {
 				
 				let id = $("#idInput").val();
 				let password = $("#passwordInput").val();
 				
+				e.preventDefault();
 				
 				if(!valueCheck($("#idInput"), "아이디")){
 					return;
@@ -70,6 +75,7 @@
 						alert("로그인 에러");
 					}
 				});
+				return false;
 			});
 		});
 	</script>	
