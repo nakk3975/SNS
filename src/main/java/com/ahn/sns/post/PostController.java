@@ -34,6 +34,20 @@ public class PostController {
 		return "/post/main";
 	}
 	
+	@GetMapping("/mypost/view")
+	public String myPostView(
+			Model model
+			, HttpSession session) {
+		
+		int userId = (Integer)session.getAttribute("userId");
+		
+		List<PostDetail> postList = postBO.myPostList(userId);
+		
+		model.addAttribute("posts", postList);
+		
+		return "/post/mypost";
+	}
+	
 	@GetMapping("/create/view")
 	public String createView() {
 		return "/post/create";

@@ -43,5 +43,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 	</insert>
 	
-
+	<select id="selectMyPost" parameterType="int"
+	resultType="com.ahn.sns.post.model.Post">
+		SELECT
+			`id`
+			, `userId`
+			, `tag`
+			, `content`
+			, `imagePath`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`post`
+		WHERE
+			`userId` = #{userId}
+		ORDER BY `id` DESC
+	</select>
 </mapper>

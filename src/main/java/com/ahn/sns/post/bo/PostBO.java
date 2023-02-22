@@ -65,6 +65,42 @@ public class PostBO {
 		
 	}
 	
+public List<PostDetail> myPostList(int userId) {
+		
+		List<Post> postList = postDAO.selectMyPost(userId);
+		
+		List<PostDetail> listDetail = new ArrayList<>();
+		
+		// 생성된 postDetail 객체를 리스트로 구성한다.
+		for(Post post:postList) {
+			// postDetail 객체를 생성하고, post 객체의 정보를 저장한다.
+			PostDetail detail = new PostDetail();
+			
+			User user = userBO.getUserById(post.getUserId());
+			// 좋아요 개수 조회
+			int likeCount = likeBO.selectCountLike(post.getId());
+			// 좋아요 여부 조회
+			boolean isLike = likeBO.isLike(userId, post.getId());
+			
+			List<CommentDetail> commentList = commentBO.commentList(post.getId());
+			
+			detail.setId(post.getId());
+			detail.setTag(post.getTag());
+			detail.setUserId(post.getUserId());
+			detail.setContent(post.getContent());
+			detail.setImagePath(post.getImagePath());
+			detail.setCreatedAt(post.getCreatedAt());
+			detail.setLike(isLike);
+			detail.setLikeCount(likeCount);
+			detail.setLoginId(user.getLoginId());
+			detail.setCommentList(commentList);
+			
+			listDetail.add(detail);
+		}
+		return listDetail;
+		
+	}
+	
 	public int insertPost(int userId, String name, String title, String content, MultipartFile file) {
 		
 		String imagePath = FileManagerService.saveFile(userId, file);

@@ -18,7 +18,6 @@ public class PostDetail {
 	private Date createdAt;
 	private List<CommentDetail> commentList;
 	
-	
 	public List<CommentDetail> getCommentList() {
 		return commentList;
 	}
