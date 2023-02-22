@@ -50,13 +50,13 @@
 				let id = $("#idInput").val();
 				let password = $("#passwordInput").val();
 				
-				e.preventDefault();
-				
 				if(!valueCheck($("#idInput"), "아이디")){
+					e.preventDefault();
 					return;
 				}
 				
 				if(!valueCheck($("#passwordInput"), "비밀번호")){
+					e.preventDefault();
 					return;
 				}
 				

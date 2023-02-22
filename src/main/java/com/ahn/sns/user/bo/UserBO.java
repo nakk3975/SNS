@@ -45,4 +45,9 @@ public class UserBO {
 		
 		return userDAO.updatePassword(id, encryptPassword);
 	}
+	
+	public User getUserById(int id) {
+		return userDAO.selectUserById(id);
+	}
+
 }

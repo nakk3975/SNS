@@ -81,4 +81,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			`id` = #{id}	
 	</update>
 	
+	<select id="selectUserById" parameterType="int"
+	resultType="com.ahn.sns.user.model.User">
+		SELECT
+			`id`
+			, `loginId`
+			, `password`
+			, `name`
+			, `email`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`user`
+		WHERE
+			`id` = #{id}
+	</select>
+	
 </mapper>

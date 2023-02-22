@@ -5,6 +5,31 @@
 	margin: auto;
 }
 
+header {
+	background-color: #dddddd;
+}
+
+nav > ul > li > a {
+	font-size: x-large;
+}
+
+#logoutText {
+	vertical-align:bottom; 
+}
+
+#mainContent {
+	width : 651px;
+}
+
+#postHead {
+	background-color: #dddddd;
+}
+
+#imageTag {
+	width :700px;
+	margin: auto;
+}
+
 .contents > .join {
 	width:400px;
 	border: 1px solid #dddddd;
@@ -12,4 +37,16 @@
 
 .contents > .join > .join-box {
 	width:300px;
+}
+
+#content {
+	margin: auto;
+}
+
+#selectImg {
+	margin: 20px;
+}
+
+#commentHead {
+	background-color: #dddddd;
 }

@@ -27,4 +27,6 @@ public interface UserDAO {
 	public int updatePassword(
 			@Param("id") int id
 			, @Param("password") String password);
+	
+	public User selectUserById(@Param("id") int id);
 }
