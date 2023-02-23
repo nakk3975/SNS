@@ -20,4 +20,10 @@ public interface PostDAO {
 			, @Param("imagePath") String imagePath);
 	
 	public List<Post> selectMyPost(@Param("userId") int userId);
+	
+	public int deleteMyPost(
+			@Param("postId") int postId
+			, @Param("userId") int userId);
+	
+	public Post selectPost(@Param("postId") int postId);
 }

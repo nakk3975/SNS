@@ -107,6 +107,21 @@ public List<PostDetail> myPostList(int userId) {
 		return postDAO.insertPost(userId, name, title, content, imagePath);
 	}
 	
+	public int deletePost(int postId, int userId) {
+		
+		Post post = postDAO.selectPost(postId);
+		// 대상 post 삭제
+		int count = postDAO.deleteMyPost(postId, userId);		
+		if(count == 1){
+			
+			FileManagerService.removeFile(post.getImagePath());
+			// 대상 post 좋아요와 댓글 삭제
+			likeBO.deleteLikeByPost(postId);
+			commentBO.deleteCommentByPost(postId);
+		}
+		return count;
+	}
+	
 
 
 }

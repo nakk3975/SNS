@@ -7,7 +7,6 @@
 			<nav class="main-menu p-2">
 				<ul class="nav flex-column">
 					<li class="nav-item"><a href="/post/main/view" class="nav-link font-weight-bold">메인</a></li>
-					<li class="nav-item"><a href="#" class="nav-link font-weight-bold">검색</a></li>
 					<li class="nav-item"><a href="/post/mypost/view" class="nav-link font-weight-bold">내가 쓴 글</a></li>
 					<li class="nav-item"><a href="/post/create/view" class="nav-link font-weight-bold">글쓰기</a></li>
 				</ul>

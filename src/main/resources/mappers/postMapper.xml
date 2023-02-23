@@ -59,4 +59,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			`userId` = #{userId}
 		ORDER BY `id` DESC
 	</select>
+	
+	<delete id="deleteMyPost" parameterType="int">
+		DELETE FROM 
+			`post`
+		WHERE
+			`id` = #{postId}
+			AND `userId` = #{userId}
+	</delete>
+	
+	<select id="selectPost" parameterType="int"
+	resultType="com.ahn.sns.post.model.Post">
+		SELECT
+			`id`
+			, `userId`
+			, `tag`
+			, `content`
+			, `imagePath`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`post`
+		WHERE
+			`id` = #{postId}
+	</select>
 </mapper>

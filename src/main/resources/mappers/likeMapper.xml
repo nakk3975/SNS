@@ -31,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			`postId` = #{postId}	
 	</select>
 	
-	<delete id="deleteLike" parameterType="int">
+	<delete id="deleteLike" parameterType="map">
 		DELETE FROM
 			`like`
 		WHERE
@@ -49,4 +49,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			`postId` = #{postId}
 			AND `userId` = #{userId}
 	</select>
+	
+	<delete id="deleteLikeByPostId" parameterType="int">
+		DELETE FROM
+			`like`
+		WHERE
+			`postId` = #{postId}
+	</delete>
 </mapper>

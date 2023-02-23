@@ -24,13 +24,21 @@
 				<div>
 					<c:forEach var="post" items="${posts}">
 						<div id="mainContent" class="border ml-5">
-							<div class="d-flex align-items-end pl-2 pt-1" id="postHead">
-								<div class="small">
-									<h4>${post.loginId}</h4>
-								</div>
-								<div class="small text-secondary ml-2 mb-2">
-									<fmt:formatDate value="${post.createdAt}" pattern="yyyy-MM-dd hh:mm" />
-								</div>
+							<div class="d-flex justify-content-between pl-2 pt-1" id="postHead">
+								<div class="d-flex align-items-end">
+									<div class="small">
+										<h4>${post.loginId}</h4>
+									</div>
+									<div class="small text-secondary ml-2 mb-2">
+										<fmt:formatDate value="${post.createdAt}" pattern="yyyy-MM-dd hh:mm" />
+									</div>
+								</div>					
+								<c:if test="${userId eq post.userId}">
+								<!-- Button trigger modal -->
+									<div class="btn btn-modal pb-1" data-toggle="modal" data-target="#exampleModalCenter" data-id="${post.id}">
+									  	...
+									</div>
+								</c:if>
 							</div>			
 							<div>
 								<img src="${post.imagePath}" width="650px">
@@ -68,12 +76,46 @@
 					</c:forEach>
 				</div>
 			</section>
+			<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+			  	<div class="modal-dialog modal-dialog-centered" role="document">
+			    	<div class="modal-content">
+						<div class="modal-body text-center">
+				        	<a href="#" id="deleteModal">삭제하기</a>
+				      	</div>
+			    	</div>
+			  	</div>
+			</div>
 		</div>
 	</div>
 
 	<script src="/static/js/form.js"></script>
 	<script>
 		$(document).ready(function() {
+			
+			$("#deleteModal").on("click", function() {
+				let postId = $(this).val();
+				
+				$.ajax({
+					type:"get"
+					, url:"/post/delete"
+					, data:{"postId":postId}
+					, success:function(data) {
+						if(data.result == "success") {
+							location.reload();
+						} else {
+							alert("삭제 실패");
+						}
+					}
+					, error() {
+						alert("삭제 에러");
+					}
+				});
+			});
+			
+			$(".btn-modal").on("click", function() {
+				let id = $(this).data("id");
+				$("#deleteModal").val(id);
+			});
 			
 			$(".bi-heart-fill").on("click", function() {
 				let postId = $(this).data("like");

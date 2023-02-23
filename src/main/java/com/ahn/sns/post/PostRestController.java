@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,8 +35,8 @@ public class PostRestController {
 		
 		int userId = (Integer)session.getAttribute("userId");
 		String loginId = (String)session.getAttribute("loginId");
-		
 		int count = postBO.insertPost(userId, loginId, title, content, file);
+		
 		Map<String, String> result = new HashMap<>();
 		
 		if(count == 1) {
@@ -46,5 +47,34 @@ public class PostRestController {
 		
 		return result;
 	}
+	
+	@GetMapping("/delete")
+	public Map<String, String> deletePost(
+			@RequestParam("postId") int postId
+			, HttpSession session) {
+		
+		int userId = (int)session.getAttribute("userId");
+		
+		int count = postBO.deletePost(postId, userId);
+		
+		Map<String, String> result = new HashMap<>();
+		
+		if(count == 1) {
+			result.put("result", "success");
+		} else {
+			result.put("result", "fail");
+		}
+		
+		return result;
+	}
+	
+//	@PostMapping("/update")
+//	public Map<String, String> updatePost(
+//			@RequestParam("postId") int postId
+//			, @RequestParam("file") MultipartFile file
+//			, @RequestParam("title") String title
+//			, @RequestParam("content") String content) {
+//		
+//	}
 	
 }

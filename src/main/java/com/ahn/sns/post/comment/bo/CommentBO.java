@@ -49,4 +49,9 @@ public class CommentBO {
 	public int insertComment(int userId, String loginId, int postId, String content) {
 		return commentDAO.insertComment(userId, loginId, postId, content);
 	}
+	
+	public int deleteCommentByPost(int postId) {
+		return commentDAO.deleteCommentByPostId(postId);
+	
+	}
 }

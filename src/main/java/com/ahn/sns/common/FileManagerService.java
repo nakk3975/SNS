@@ -49,8 +49,41 @@ public class FileManagerService {
 		// 클라이언트에 접근 가능한 경로를 문자열로 리턴
 		// http://localhost:8080/images/~
 		return "/images" + directoryName + file.getOriginalFilename();
-		
-		
 	}
+	
+	// 파일 삭제 메소드
+		public static boolean removeFile(String filePath) { 	// /images/2_38239823/test.png
+			// 삭제 경로 /images를 제거하고
+			// 실제 파일 저장 경로에 이어 붙여 준다.
+			// D:\\study\\java\\spring\\project\\upload\\images
+		
+			String realFilePath = FILE_UPLOAD_PATH + filePath.replace("/images", "");
+			Path path = Paths.get(realFilePath);
+			
+			// 파일이 존재하는지
+			if(Files.exists(path)) {
+				try {
+					Files.delete(path);
+				} catch (IOException e) {
+					e.printStackTrace();
+					return false;
+				}
+			}
+			
+			// D:\\study\\java\\spring\\project\\upload\\images/2_38239823/test.png
+			// 디렉토리 경로
+			Path dirPath = path.getParent();
+			// 디렉토리 존재 하는지
+			if(Files.exists(dirPath)) {
+				try {
+					Files.delete(dirPath);
+				} catch (IOException e) {
+					e.printStackTrace();
+					return false;
+				}
+			}
+			
+			return true;
+		}
 	
 }
