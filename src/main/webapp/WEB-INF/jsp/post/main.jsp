@@ -94,6 +94,11 @@
 	<script>
 		$(document).ready(function() {
 			
+			$("#updateModal").on("click", function() {
+				let postId = $(this).data("post-id");
+				location.href="/post/update/view?postId=" + postId;
+			});
+			
 			$("#deleteModal").on("click", function() {
 				let postId = $(this).data("post-id");
 				

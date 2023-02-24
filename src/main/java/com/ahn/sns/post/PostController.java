@@ -7,8 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ahn.sns.post.bo.PostBO;
+import com.ahn.sns.post.model.Post;
 import com.ahn.sns.post.model.PostDetail;
 
 import jakarta.servlet.http.HttpSession;
@@ -45,12 +47,23 @@ public class PostController {
 		
 		model.addAttribute("posts", postList);
 		
-		return "/post/mypost";
+		return "/post/main";
 	}
 	
 	@GetMapping("/create/view")
 	public String createView() {
 		return "/post/create";
+	}
+	
+	@GetMapping("/update/view")
+	public String updateView(
+			@RequestParam("postId") int postId
+			,Model model) {
+		
+		Post post = postBO.getPost(postId);
+		
+		model.addAttribute("post", post);
+		return "/post/update";
 	}
 	
 }

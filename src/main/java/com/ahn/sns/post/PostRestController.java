@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -68,13 +69,27 @@ public class PostRestController {
 		return result;
 	}
 	
-//	@PostMapping("/update")
-//	public Map<String, String> updatePost(
-//			@RequestParam("postId") int postId
-//			, @RequestParam("file") MultipartFile file
-//			, @RequestParam("title") String title
-//			, @RequestParam("content") String content) {
-//		
-//	}
+	@PostMapping("/update")
+	public Map<String, String> updatePost(
+			@RequestParam("postId") int postId
+			, @RequestPart(value = "file", required = false) MultipartFile file
+			, @RequestParam("title") String title
+			, @RequestParam("content") String content
+			, HttpSession session) {
+		
+		int userId = (int)session.getAttribute("userId");
+		
+		int count = postBO.updatePost(userId, postId, title, content, file);
+		
+		Map<String, String> result = new HashMap<>();
+		
+		if(count == 1) {
+			result.put("result", "success");
+		} else {
+			result.put("result", "fail");
+		}
+		
+		return result;
+	}
 	
 }

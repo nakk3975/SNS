@@ -121,6 +121,22 @@ public List<PostDetail> myPostList(int userId) {
 		}
 		return count;
 	}
+
+	public Post getPost(int postId) {
+		return postDAO.selectPost(postId);
+	}
+	
+	public int updatePost(int userId, int postId, String title, String content, MultipartFile file) {
+		
+		Post post = postDAO.selectPost(postId);
+		String imagePath = null;
+		if(file != null) {
+			FileManagerService.removeFile(post.getImagePath());
+			imagePath = FileManagerService.saveFile(userId, file);
+		}
+		
+		return postDAO.updatePost(userId, postId, title, content, imagePath);
+	}
 	
 
 

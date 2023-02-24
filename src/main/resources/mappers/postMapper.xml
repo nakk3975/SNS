@@ -83,4 +83,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE
 			`id` = #{postId}
 	</select>
+	
+	<update id="updatePost" parameterType="map">
+		UPDATE
+			`post`
+		SET
+			`tag` = #{title}
+			, `content` = #{content}
+			, `imagePath` = #{imagePath}
+			, `updatedAt` = now()
+		WHERE
+			`id` = #{postId}
+	</update>
 </mapper>

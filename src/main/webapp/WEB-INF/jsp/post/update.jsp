@@ -21,16 +21,16 @@
 			<c:import url="/WEB-INF/jsp/include/header.jsp" />
 			<section id="content" class="mt-3">
 				<div>
-					<h1>글 쓰기</h1>
+					<h1>글 수정</h1>
 					<div id="imageBox">
-						<input type="file" id="fileInput" class="form-control" onchange="loadFile(this)">
+						<input type="file" id="fileInput" value="${post.imagePath}" class="form-control" onchange="loadFile(this)">
 						<div id="imageTag">
-							<img id="imgBox" src="" width="700px">
+							<img id="imgBox" src="${post.imagePath}" width="700px">
 						</div>
 					</div>
-					<input type="text" id="title" placeholder="제목, 태그" class="form-control mt-4">
-					<textarea rows="5" cols="80" id="contentInput" placeholder="내용" class="form-control my-3"></textarea>
-					<button type="button" id="createBtn" class="btn btn-block btn-primary">등록</button>
+					<input type="text" id="title" placeholder="제목, 태그" class="form-control mt-4" value="${post.tag}">
+					<textarea rows="5" cols="80" id="contentInput" placeholder="내용" class="form-control my-3">${post.content }</textarea>
+					<button type="button" id="updateBtn" class="btn btn-block btn-primary" data-id="${post.id}">등록</button>
 				</div>
 			</section>
 		</div>
@@ -41,17 +41,17 @@
 		function loadFile(input) {
 			var file = input.files[0];
 			$("#imgBox").attr("src", URL.createObjectURL(file));
-			
 		}
 		
 		$(document).ready(function() {
-			$("#createBtn").on("click", function() {
-				let image = $("#fileInput").val();
+			
+			$("#updateBtn").on("click", function() {
+				let id = $(this).data("id");
 				let title = $("#title").val();
 				let content = $("#contentInput").val();
 				
-				if(!valueCheck($("#fileInpute"), "이미지")) {
-					return;
+				if($("#fileInput")[0].files[0] == 0) {
+					$("#fileInput")[0].files[0] = $("#fileInput").val();
 				}
 				
 				if(!valueCheck($("#contentInput"), "내용")) {
@@ -59,13 +59,14 @@
 				}
 				
 				var formData = new FormData();
+				formData.append("postId", id);
 				formData.append("title", title);
 				formData.append("content", content);
 				formData.append("file", $("#fileInput")[0].files[0]);
 				
 				$.ajax({
 					type:"post"
-					, url:"/post/create"
+					, url:"/post/update"
 					, data:formData
 					, enctype:"multipart/form-data"	// 파일 업로드 필수 항목
 					, processData:false	// 파일 업로드 필수 항목
@@ -74,11 +75,11 @@
 						if(data.result == "success"){
 							location.href = "/post/main/view";
 						} else {
-							alert("게시글 등록 실패");
+							alert("게시글 수정 실패");
 						}
 					}
 					, error:function() {
-						alert("게시글 등록 에러");
+						alert("게시글 수정 에러");
 					}
 				});
 			});
